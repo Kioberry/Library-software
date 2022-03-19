@@ -73,7 +73,7 @@ BookList find_book_by_title(const char* title) {
 		printf("Sorry, your query is invalid.");
 
 	}
-
+	void search_for_books();
 
 }
 
