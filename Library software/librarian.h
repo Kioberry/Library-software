@@ -5,6 +5,7 @@
 
 void librarianMenu();
 void librarianCLI();
+void search_for_books();
 
 
 #endif
