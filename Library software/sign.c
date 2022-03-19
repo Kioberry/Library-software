@@ -22,6 +22,12 @@ void signMenu() {
 void rigister() {
 	char press = 0;
 	char name[20], username[20], password[20], password2[20];
+	FILE* fp;
+	if ((fp = fopen("user.txt", 'r')) == NULL) {
+		fp = fopen("user.txt", 'w');
+		fclose(fp);
+	}
+	fp = fopen("user.txt", "a+");
 	while (1) {
 		printf("Please enter your name: ");
 		scanf("%s", &name);
@@ -40,9 +46,10 @@ void rigister() {
 			scanf("%s", password2);
 		}
 		else {
-			
+			fprintf(fp, "%s %s %s\n", name, username, password);
 			break;
 		}
+		fclose(fp);
 	}
 	
 
