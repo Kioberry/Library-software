@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "librarian.h"
+#include "library.h"
 #include "book_management.h"
 
 void librarianMenu() {
@@ -16,4 +17,14 @@ void librarianMenu() {
 	printf("\tPlease choose an option, press Enter to confirm\n");
 	printf("---------------------------------------------\n");
 	printf("\n");
+}
+
+
+//adds a book to the ones available to the library
+//returns 0 if the book could be added, or an error code otherwise
+int add_book(Book book) {
+	Book* newNode = creatNode(book.id, book.title, book.authors, book.year, book.copies);
+	newNode->next = book.next;
+	book.next = newNode;
+	return 0;
 }
