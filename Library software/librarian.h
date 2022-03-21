@@ -3,9 +3,13 @@
 
 #include <stdio.h>
 
-void librarianMenu();
+
 void librarianCLI();
-void search_for_books();
+
+void librarianMenu();
+
+//search books by one of the three ways in the librarian system
+void librarianSearch();
 
 
 #endif

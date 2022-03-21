@@ -9,8 +9,15 @@ typedef struct _User {
 	struct _USer* next;
 }User;
 
-void userMenu();
+
+//function for the operation of User system
 void userCLI();
+
+//display the user menu
+void userMenu();
+
+//search books by one of the three ways in the user system
+void userSearch();
 
 
 

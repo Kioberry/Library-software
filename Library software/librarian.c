@@ -28,3 +28,50 @@ int add_book(Book book) {
 	book.next = newNode;
 	return 0;
 }
+
+void librarianSearch() {
+	searchMenu();
+	char choice = 0;
+	scanf("%c", choice);
+	for (;;) {
+		switch (choice) {
+		case '1':
+		{
+			char* title = { '\0' };
+			printf("Please enter the title of the book: ");
+			scanf("%s", title);
+			find_book_by_title(title);
+			getchar();
+			librarianSearch();
+			break;
+		}
+		case '2':
+		{
+			char* authors = { '\0' };
+			printf("Please enter the author of the book(separate them with commas): ");
+			scanf("%s", authors);
+			find_book_by_author(authors);
+			getchar();
+			librarianSearch();
+			break;
+		}
+		case '3':
+		{
+			int year = 0;
+			printf("Please enter the publication of of the book(separate them with commas): ");
+			scanf("%s", year);
+			find_book_by_year(year);
+			getchar();
+			librarianSearch();
+			break;
+		}
+		case '4':
+			librarianCLI();
+			break;
+		default:
+			printf("Sorry, your option is invalid");
+			getchar();
+			librarianSearch();
+		}
+	}
+}
