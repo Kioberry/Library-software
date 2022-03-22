@@ -18,6 +18,9 @@ void userMenu() {
 	printf("\n");
 }
 
+
+
+
 //search books by one of the three ways in the user system
 void userSearch() {
 	searchMenu();
@@ -68,5 +71,6 @@ void userSearch() {
 
 
 void userCLI() {
+	User* uhead;
 	printf("\t(Logged in as: %s)\n", User->name);
 }

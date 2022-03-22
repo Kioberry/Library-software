@@ -2,6 +2,7 @@
 
 #include "librarian.h"
 #include "library.h"
+#include "user.h"
 #include "book_management.h"
 
 void librarianMenu() {
@@ -23,10 +24,18 @@ void librarianMenu() {
 //adds a book to the ones available to the library
 //returns 0 if the book could be added, or an error code otherwise
 int add_book(Book book) {
-	Book* newNode = creatNode(book.id, book.title, book.authors, book.year, book.copies);
-	newNode->next = book.next;
-	book.next = newNode;
-	return 0;
+	
+}
+
+//display the linked list of users(new feature)
+void displayUsers(User* head) {
+	User* pMove = head->next;
+	printf("numBorrowed\tname\tusername\tpassword");
+	while (pMove) {
+		printf("%d\t%s\t%s\t%s\n", pMove->numBorrowed, pMove->name, pMove->username, pMove->password);
+		pMove = pMove->next;
+	}
+	printf("\n");
 }
 
 void librarianSearch() {

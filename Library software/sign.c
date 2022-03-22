@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "sign.h"
+#include "user.h"
 #include "library.h"
 
 
@@ -22,22 +23,52 @@ void signMenu() {
 	printf("Option: ");
 }
 
+//create the node of the linked list(used in registration to create a new account)
+User* creatuNode(int numBorrowed, char name[20], char username[20], char password[20]) {
+	//dynamically allocate the userList array for storing books
+	User* newNode = (User*)malloc(sizeof(User));
 
-//未完成！
-void registration() {
+	//Assign parameters to the data field of the new node
+	newNode->numBorrowed = numBorrowed;
+	//use strcpy function with char variables
+	strcpy(newNode->name, name);
+	strcpy(newNode->username, username);
+	strcpy(newNode->password, password);
+	newNode->next = NULL;
+	return newNode;
+}
+
+
+//transverse the linked list
+User* searchUsername(char username[20]) {
+	User* pMove = uhead->next;
+	while (pMove) {
+		if (!strcmp(pMove->username,username)) {
+			return pMove;
+		}
+		pMove = pMove->next;
+	}
+	return NULL;
+}
+
+//注意要在主函数里设置命令行参数输入！
+void registration(FILE* fp, char ufname[20]) {
 	char press = 0;
 	char name[20], username[20], password[20], password2[20];
-	FILE* fp;
-	if ((fp = fopen("user.txt", 'r')) == NULL) {
-		fp = fopen("user.txt", 'w');
+	if ((fp = fopen(ufname, 'r')) == NULL) {
+		fp = fopen(ufname, 'w');
 		fclose(fp);
 	}
-	fp = fopen("user.txt", "a+");
+	fp = fopen(ufname, "a");
 	while (1) {
 		printf("Please enter your name: ");
 		scanf("%s", &name);
 		printf("Please enter a username: ");
 		scanf("%s", &username);
+		if (searchUsername(username) != NULL) {
+			printf("Sorry, registration unsuccessful, the username you entered already exists."); \
+			break;
+		}
 		printf("Please enter a password(No more than 20 characters): ");
 		scanf("%s", &password);
 		printf("Please enter your password again to confirm: ");
@@ -52,14 +83,18 @@ void registration() {
 		}
 		else {
 			fprintf(fp, "%s %s %s\n", name, username, password);
+			createuNode(0, name, username, password);
+
 			break;
 		}
 		fclose(fp);
 	}	
 }
 
+
 //未完成！
 void login() {
+
 	printf("Please enter your username: ");
 	printf("Please enter your password: ");
 }

@@ -9,6 +9,8 @@ typedef struct _User {
 	struct _USer* next;
 }User;
 
+User* uhead;
+FILE* ufile;
 
 //function for the operation of User system
 void userCLI();

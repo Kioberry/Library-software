@@ -21,6 +21,8 @@ void libraryCLI() {
 	}
 
 }
+
+
 //完成 可以用booklist 中的length代替？
 int numBooks() {
 	FILE* fp;
@@ -45,11 +47,26 @@ int numBooks() {
 }
 
 
+/******The core function area******/
+
 //create the linked list of books
 Book* createbList() {
 	Book* head = (Book*)malloc(sizeof(Book));
 	head->next = NULL;
 	return head;
+}
+
+
+//create the linked list of users
+User* createuList() {
+	User* head = (User*)malloc(sizeof(User));
+	head->next = NULL;
+	return head;
+}
+
+//saves the database of books in the specified file
+int store_books(FILE* file) {
+
 }
 
 
@@ -105,7 +122,7 @@ BookList* initBooklist(Book* head) {
 }
 
 
-//完成！
+
 //finds books with a given title.
 //returns a BookList structure, where the field "list" is a list of books, or null if no book with the 
 //provided title can be found. The length of the list is also recorded in the returned structure, with 0 in case
@@ -118,7 +135,7 @@ BookList find_book_by_title(const char* title) {
 	char* fauthors; //comma separated list of authors
 	int fyear = 0; // year of publication
 	int fcopies = 0; //number of copies the library has
-	BookList* booklist = initBooks(head);
+	BookList* booklist = initBooks(bhead);
 	if ((fp = fopen("library.bin", "rb")) == NULL) {//二进制数据会影响到数据读取吗？
 		printf("\nSorry, the record file does not exist! ");
 	}
@@ -159,7 +176,7 @@ BookList find_book_by_author(const char* author) {
 	char* fauthors; //comma separated list of authors
 	int fyear = 0; // year of publication
 	int fcopies = 0; //number of copies the library has
-	BookList* booklist = initBooks(head);
+	BookList* booklist = initBooks(bhead);
 	if ((fp = fopen("library.bin", "rb")) == NULL) {//二进制数据会影响到数据读取吗？
 		printf("\nSorry, the record file does not exist! ");
 	}

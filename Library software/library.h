@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 
-Book* head;
+Book* bhead;
 
 
 //main function of the Library management system
