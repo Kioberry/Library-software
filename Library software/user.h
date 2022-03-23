@@ -5,12 +5,13 @@
 
 typedef struct _User {
 	int numBorrowed;
-	char name[20], username[20], password[20];
+	char name[50], username[50], password[50];
 	struct _USer* next;
 }User;
 
 User* uhead;
-FILE* ufile;
+
+
 
 //function for the operation of User system
 void userCLI();
@@ -20,6 +21,8 @@ void userMenu();
 
 //search books by one of the three ways in the user system
 void userSearch();
+
+void borrow_book();
 
 
 

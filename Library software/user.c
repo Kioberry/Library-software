@@ -3,6 +3,7 @@
 #include "user.h"
 #include "library.h"
 #include "book_management.h"
+#include "global.h"
 
 void userMenu() {
 	printf("\n");
@@ -59,6 +60,8 @@ void userSearch() {
 			break;
 		}
 		case '4':
+			printf("\nReturning to previous menu...\n");
+			system("pause");
 			userCLI();
 			break;
 		default:
@@ -69,8 +72,10 @@ void userSearch() {
 	}
 }
 
+void borrowbook() {
+
+}
 
 void userCLI() {
-	User* uhead;
-	printf("\t(Logged in as: %s)\n", User->name);
+	userMenu();
 }

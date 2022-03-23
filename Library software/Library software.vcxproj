@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="global.c" />
     <ClCompile Include="librarian.c" />
     <ClCompile Include="library.c" />
     <ClCompile Include="sign.c" />
@@ -146,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="book_management.h" />
+    <ClInclude Include="global.h" />
     <ClInclude Include="librarian.h" />
     <ClInclude Include="library.h" />
     <ClInclude Include="sign.h" />

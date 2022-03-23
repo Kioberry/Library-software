@@ -5,6 +5,7 @@
 #include "sign.h"
 #include "user.h"
 #include "library.h"
+#include "global.h"
 
 
 void signMenu() {
@@ -24,7 +25,7 @@ void signMenu() {
 }
 
 //create the node of the linked list(used in registration to create a new account)
-User* creatuNode(int numBorrowed, char name[20], char username[20], char password[20]) {
+User* creatuNode(int numBorrowed, const char* name, const char* username, char password) {
 	//dynamically allocate the userList array for storing books
 	User* newNode = (User*)malloc(sizeof(User));
 
@@ -39,11 +40,17 @@ User* creatuNode(int numBorrowed, char name[20], char username[20], char passwor
 }
 
 
+
+
+
+/*******The registration module*********/
+
+
 //transverse the linked list
-User* searchUsername(char username[20]) {
+User* searchUsername(const char* username) {
 	User* pMove = uhead->next;
 	while (pMove) {
-		if (!strcmp(pMove->username,username)) {
+		if (!strcmp(pMove->username, username)) {
 			return pMove;
 		}
 		pMove = pMove->next;
@@ -51,10 +58,21 @@ User* searchUsername(char username[20]) {
 	return NULL;
 }
 
+//add a new user in the user linked list
+void add_user(User* head, int numBorrowed, char name[20], char username[20], char password[20]) {
+	//First, create the user node that need to be inserted into the linked list
+	User* newNode = creatNode(numBorrowed, name, username, password);
+	//perform the operation of inserting the node
+	newNode->next = head->next;
+	head->next = newNode;
+	return 0;
+}
+
 //注意要在主函数里设置命令行参数输入！
-void registration(FILE* fp, char ufname[20]) {
+//registration of a new user.
+void registration(FILE* fp, char ufname[50]) {
 	char press = 0;
-	char name[20], username[20], password[20], password2[20];
+	char name[50], username[50], password[50], password2[50];
 	if ((fp = fopen(ufname, 'r')) == NULL) {
 		fp = fopen(ufname, 'w');
 		fclose(fp);
@@ -83,8 +101,7 @@ void registration(FILE* fp, char ufname[20]) {
 		}
 		else {
 			fprintf(fp, "%s %s %s\n", name, username, password);
-			createuNode(0, name, username, password);
-
+			add_user(uhead, 0, name, username, password);
 			break;
 		}
 		fclose(fp);
@@ -92,12 +109,75 @@ void registration(FILE* fp, char ufname[20]) {
 }
 
 
-//未完成！
-void login() {
+/***********The Login module*******/
 
-	printf("Please enter your username: ");
-	printf("Please enter your password: ");
+
+//transverse the userlist to varify the username and password.
+//returns 1 if both username and password can be matched, returns 0 if
+//username couldn't be matched and returns -1 if username can be matched 
+// while password is incorrect.
+int searchUser(FILE* fp, char ufname[50], char fusername[50], char fpassword[50]) {
+	int numBorrowed;
+	char name[20], username[20], password[20];
+	if ((fp = fopen(ufname, 'r')) == NULL) {
+		printf("No user exists yet! Please create a new account.");
+		getch();
+		signCLI();
+	}
+
+	for (; !feof(fp);)
+	{
+		fscanf(fp, "%d%s%s%s", &numBorrowed, &name, &username, &password);
+		if (strcmp(fusername, username))
+		{
+			if (strcmp(fpassword, password) == 0)
+				return 1;
+			else
+			{
+				return -1;
+			}
+		}
+	}
+	return 0;
 }
+
+
+//function to allow authentic users to log in
+void login() {
+	int press, ret;
+	char name[20], username[20], password[20], password2[20];
+	do {
+		printf("Please enter your username: ");
+		scanf("%s", &username);
+		printf("Press 'Enter' to confirm input, press 'Esc' to re-enter");
+		press = getch();
+		while (press != 13 && press != 27) {
+			press = getch();
+		}
+	} while (press == 27);
+
+	printf("Please enter your password: ");
+	scanf("%s", &password);
+	int ret = searchUser(ufile, ufname, username, password);
+	if (ret == 1) {
+		printf("\nlogged in as: %s", username);
+		userCLI();
+	}
+	else if (ret == 0) {
+		printf("The username does not exist.");
+		getch();
+		signCLI();
+	}
+	else if (ret == -1) {
+		printf("Sorry, the password is incorrect.");
+		getch();
+		login();
+	}
+	
+}
+
+
+/*********Search for books********/
 
 //search books by one of the three ways in the Login system
 void signSearch() {
@@ -129,7 +209,7 @@ void signSearch() {
 		case '3':
 		{
 			int year = 0;
-			printf("Please enter the publication of of the book(separate them with commas): ");
+			printf("Please enter the publication of year: ");
 			scanf("%s", year);
 			find_book_by_year(year);
 			getch();
@@ -137,6 +217,7 @@ void signSearch() {
 			break;
 		}
 		case '4':
+			printf("\nReturning to previous menu...\n");
 			signCLI();
 			break;
 		default:
@@ -147,6 +228,33 @@ void signSearch() {
 	}
 }
 
-void signCLI() {
 
+void signCLI() {
+	signMenu();
+	char choice = 0;
+	scanf("%c", choice);
+	while (1) {
+		switch (choice) {
+			case'1':
+				registration(ufile, ufname);
+			    break;
+			case'2':
+				login();
+				break;
+			case'3':
+				signSearch();
+				break;
+			case'4':
+				system("cls");
+				break;
+			default:
+				printf("\nSorry, the option you entered was invalid, please try again.\n");
+				system("pause");
+			//对不对？
+			getch();
+			exit(0);
+			system("cls");
+			break;
+		}
+	}
 }

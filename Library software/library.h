@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 
-Book* bhead;
+
 
 
 //main function of the Library management system
@@ -18,6 +18,9 @@ int numBooks();
 
 //create the linked list of books
 Book* createbList();
+
+//create the linked list of users
+User* createuList();
 
 //create the node of the linked list
 Book* creatbNode(int id, const char* title, const char* authors, int year, int copies);

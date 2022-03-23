@@ -27,6 +27,9 @@
     <ClCompile Include="sign.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="global.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="book_management.h">
@@ -42,6 +45,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="sign.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
