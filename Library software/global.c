@@ -8,3 +8,5 @@ char tempa[100];
 
 FILE* bfile;
 FILE* ufile;
+
+char t_username;

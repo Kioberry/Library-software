@@ -70,14 +70,11 @@ User* createuList() {
 	return uhead;
 }
 
-//saves the database of books in the specified file
-int store_books(FILE* file) {
 
-}
 
 
 //create the node of the linked list
-Book* creatbNode(int id, char temp1[100], char temp2[100], int year, int copies) {
+Book* createbNode(int id, char temp1[100], char temp2[100], int year, int copies) {
 	//dynamically allocate the bookList array for storing books
 	Book* newNode = (Book*)malloc(sizeof(Book));
 
@@ -95,8 +92,13 @@ Book* creatbNode(int id, char temp1[100], char temp2[100], int year, int copies)
 
 
 //print the linked list of books(some problems with authors)
-void printbList(Book* head) {
-	Book* pMove = head->next;
+void display_books(Book* head) {
+	if (numBooks() == 0) {
+		printf("There are no books in the library, please contact the administrator to add books!\n");
+		return;
+	}
+	Book* pMove = (Book*)malloc(sizeof(Book));
+	pMove = head->next;
 	printf("id\ttitle\tauther\tyear\tcopies\n");
 	while (pMove) {
 		printf("%d\t%s\t%s\t%d\n", pMove->id, pMove->title, pMove->authors, pMove->year, pMove->copies);
@@ -173,14 +175,13 @@ int load_books(FILE* file) {
 			{
 				//create a new node that needs to
 				//be inserted into the linked list
-				p = newNode = creatNode(fid, temp1, temp2, fyear, fcopies);
+				p = newNode = createbNode(fid, temp1, temp2, fyear, fcopies);
 				bhead = p;
 			}
 			else {
-				newNode = creatNode(fid, temp1, temp2, fyear, fcopies);
 				p->next = newNode;
-				newNode->next = NULL;
 				p = newNode;
+				newNode = createbNode(fid, temp1, temp2, fyear, fcopies);
 			}
 			
 		}
@@ -209,7 +210,7 @@ BookList find_book_by_title(const char* title) {
 	char* fauthors; //comma separated list of authors
 	int fyear = 0; // year of publication
 	int fcopies = 0; //number of copies the library has
-	BookList* booklist = initBooks(bhead);
+	//BookList* booklist = initBooks(bhead);
 	if ((fp = fopen("library.bin", "rb")) == NULL) {//二进制数据会影响到数据读取吗？
 		printf("\nSorry, the record file does not exist! ");
 	}
@@ -329,7 +330,7 @@ void searchMenu() {
 }
 
 
-//未完成！
+
 void search_for_books() {
 	searchMenu();
 	char choice = 0;
@@ -365,4 +366,13 @@ void search_for_books() {
 			printf("Sorry, your option is invalid");		
 	}
 	getch();
+}
+
+int main(void) {
+	//已经外部声明的全局变量在main函数里需要重新声明吗？
+	//Firstly, initialise the book linked list, user linked list and booklist structure.
+	Book* bhead = createbList();
+	User* uhead = createuList();
+	BookList* booklist = initBooklist(bhead);
+	return 0;
 }

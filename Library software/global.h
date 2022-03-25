@@ -8,3 +8,6 @@ extern char tempa[100];
 
 extern FILE* bfile;
 extern FILE* ufile;
+//文件指针和文件名是不是可以二选一留一个？
+
+extern char t_username;

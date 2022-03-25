@@ -72,10 +72,11 @@ void userSearch() {
 	}
 }
 
-void borrowbook() {
-
+void borrow_book() {
+	
 }
 
 void userCLI() {
+	printf("\nlogged in as: %s", t_username);
 	userMenu();
 }

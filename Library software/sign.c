@@ -145,10 +145,10 @@ int searchUser(FILE* fp, char ufname[50], char fusername[50], char fpassword[50]
 //function to allow authentic users to log in
 void login() {
 	int press, ret;
-	char name[20], username[20], password[20], password2[20];
+	char name[20], password[20], password2[20];
 	do {
 		printf("Please enter your username: ");
-		scanf("%s", &username);
+		scanf("%s", &t_username);
 		printf("Press 'Enter' to confirm input, press 'Esc' to re-enter");
 		press = getch();
 		while (press != 13 && press != 27) {
@@ -158,9 +158,8 @@ void login() {
 
 	printf("Please enter your password: ");
 	scanf("%s", &password);
-	int ret = searchUser(ufile, ufname, username, password);
+	int ret = searchUser(ufile, ufname, t_username, password);
 	if (ret == 1) {
-		printf("\nlogged in as: %s", username);
 		userCLI();
 	}
 	else if (ret == 0) {
