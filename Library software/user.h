@@ -6,12 +6,13 @@
 typedef struct _User {
 	int numBorrowed;
 	char name[50], username[50], password[50];
+	Book* borrowed;
 	struct _USer* next;
 }User;
 
-User* uhead;
+extern User* uhead;
 
-
+extern User* theUser;
 
 //function for the operation of User system
 void userCLI();

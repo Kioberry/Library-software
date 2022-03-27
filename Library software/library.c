@@ -8,19 +8,7 @@
 #include "book_management.h"
 #include "global.h"
 
-//未完成！
-void libraryCLI() {
-	void librarianCLI();
-	void userCLI();
-	char choice;
-	mainMenu();
-	scanf("%c", &choice);
-	switch (choice) {
-		case '1':
 
-	}
-
-}
 
 
 //完成 可以用booklist 中的length代替？
@@ -33,7 +21,7 @@ int numBooks() {
 	int fyear = 0; // year of publication
 	int fcopies = 0; //number of copies the library has
 	
-	if (fp = fopen(bfname, "r") == NULL) {
+	if (fp = fopen(bfname, "rb") == NULL) {
 		printf("Sorry, the record file does not exist!");
 		return 0;
 	}
@@ -74,7 +62,7 @@ User* createuList() {
 
 
 //create the node of the linked list
-Book* createbNode(int id, char temp1[100], char temp2[100], int year, int copies) {
+Book* createbNode(int id, char temp1[100], char temp2[100], int year, int copies, int originc) {
 	//dynamically allocate the bookList array for storing books
 	Book* newNode = (Book*)malloc(sizeof(Book));
 
@@ -86,7 +74,20 @@ Book* createbNode(int id, char temp1[100], char temp2[100], int year, int copies
 	strcpy(newNode->authors, temp2);
 	newNode->year = year;
 	newNode->copies = copies;
+	newNode->originc = originc;
 	newNode->next = NULL;
+	return newNode;
+}
+
+User* createuNode(int numBorrowed, char name[50], char username[50], char password[50], Book* borrowed) {
+	//dynamically allocate the bookList array for storing books
+	User* newNode = (User*)malloc(sizeof(User));
+
+	newNode->numBorrowed = numBorrowed;
+	strcpy(newNode->name, name);
+	strcpy(newNode->username, username);
+
+	newNode->borrowed = (Book*)malloc(sizeof(Book));
 	return newNode;
 }
 
@@ -143,7 +144,8 @@ int store_books(FILE* file) {
 	Book* pMove = bhead->next;
 	while (pMove)
 	{
-		fprintf(file, "%d%s%s%d%d",pMove->id, pMove->title, pMove->authors, pMove->year, pMove->copies);
+		//格式需要注意？
+		fprintf(file, "%d%s%s%d%d%d",pMove->id, pMove->title, pMove->authors, pMove->year, pMove->copies, pMove->originc);
 		pMove = pMove->next;
 	}
 	fclose(file);
@@ -155,7 +157,7 @@ int store_books(FILE* file) {
 //returns 0 if books were loaded correctly, or an error code otherwise
 int load_books(FILE* file) {
 	int n, i, m = 0;
-	int fid, fyear, fcopies = 0;
+	int fid, fyear, fcopies, foriginc = 0;
 	char temp1[100], temp2[100];
 	Book* p, *newNode;
 	memset(temp1, 0, sizeof(temp1));
@@ -169,19 +171,19 @@ int load_books(FILE* file) {
 	else {
 		n = numBooks();
 		for (i = 0; i < n; i++) {
-			fscanf(file, "%d%s%s%d%d", &fid, temp1, temp2, &fyear, &fcopies);
+			fscanf(file, "%d%s%s%d%d%d", &fid, temp1, temp2, &fyear, &fcopies, &foriginc);
 			m++;
 			if (m == 1)
 			{
 				//create a new node that needs to
 				//be inserted into the linked list
-				p = newNode = createbNode(fid, temp1, temp2, fyear, fcopies);
-				bhead = p;
+				p = newNode = createbNode(fid, temp1, temp2, fyear, fcopies, foriginc);
+				bhead->next = p;
 			}
 			else {
 				p->next = newNode;
 				p = newNode;
-				newNode = createbNode(fid, temp1, temp2, fyear, fcopies);
+				newNode = createbNode(fid, temp1, temp2, fyear, fcopies, foriginc);
 			}
 			
 		}
@@ -209,15 +211,15 @@ BookList find_book_by_title(const char* title) {
 	char* ftitle; //book title
 	char* fauthors; //comma separated list of authors
 	int fyear = 0; // year of publication
-	int fcopies = 0; //number of copies the library has
+	int fcopies, foriginc = 0; //number of copies the library has
 	//BookList* booklist = initBooks(bhead);
-	if ((fp = fopen("library.bin", "rb")) == NULL) {//二进制数据会影响到数据读取吗？
+	if ((fp = fopen(bfile, "r")) == NULL) {//二进制数据会影响到数据读取吗？
 		printf("\nSorry, the record file does not exist! ");
 	}
 	//int n = numBooks();
 	int n = booklist->length;
 	for (i = 0; i < n; i++) {
-		fscanf("%d%s%s%d%d", &fid, ftitle, fauthors, &fyear, &fcopies);
+		fscanf("%d%s%s%d%d%d", &fid, ftitle, fauthors, &fyear, &fcopies, &foriginc);
 		if (!strcmp(title, ftitle)) {
 			if (isFlag == 0) {
 				printf("here is the searching result.\n");
@@ -250,15 +252,15 @@ BookList find_book_by_author(const char* author) {
 	char* ftitle; //book title
 	char* fauthors; //comma separated list of authors
 	int fyear = 0; // year of publication
-	int fcopies = 0; //number of copies the library has
+	int fcopies, foriginc = 0; //number of copies the library has
 	BookList* booklist = initBooks(bhead);
-	if ((fp = fopen("library.bin", "rb")) == NULL) {//二进制数据会影响到数据读取吗？
+	if ((fp = fopen(bfile, "r")) == NULL) {//二进制数据会影响到数据读取吗？
 		printf("\nSorry, the record file does not exist! ");
 	}
 	//int n = numBooks();
 	int n = booklist->length;
 	for (i = 0; i < n; i++) {
-		fscanf("%d%s%s%d%d", &fid, ftitle, fauthors, &fyear, &fcopies);
+		fscanf("%d%s%s%d%d%d", &fid, ftitle, fauthors, &fyear, &fcopies, &foriginc);
 		if (!strcmp(author, fauthors)) {
 			if (isFlag == 0) {
 				printf("here is the searching result.\n");
@@ -288,15 +290,15 @@ BookList find_book_by_year(unsigned int year) {
 	char* ftitle; //book title
 	char* fauthors; //comma separated list of authors
 	int fyear = 0; // year of publication
-	int fcopies = 0; //number of copies the library has
+	int fcopies, foriginc = 0; //number of copies the library has
 	BookList* booklist = initBooks(bhead);
-	if ((fp = fopen("library.bin", "rb")) == NULL) {//二进制数据会影响到数据读取吗？
+	if ((fp = fopen(bfile, "r")) == NULL) {//二进制数据会影响到数据读取吗？
 		printf("\nSorry, the record file does not exist! ");
 	}
 	//int n = numBooks();
 	int n = booklist->length;
 	for (i = 0; i < n; i++) {
-		fscanf("%d%s%s%d%d", &fid, ftitle, fauthors, &fyear, &fcopies);
+		fscanf("%d%s%s%d%d%d", &fid, ftitle, fauthors, &fyear, &fcopies, &foriginc);
 		if (year == fyear) {
 			if (isFlag == 0) {
 				printf("here is the searching result.\n");
@@ -318,7 +320,7 @@ BookList find_book_by_year(unsigned int year) {
 }
 
 
-//完成
+//The search interface shown on the screen
 void searchMenu() {
 	printf("\n");
 	printf("\tPlease choose an option:\n");

@@ -10,3 +10,5 @@ FILE* bfile;
 FILE* ufile;
 
 char t_username;
+
+int maxBorrowed;

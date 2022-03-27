@@ -1,5 +1,5 @@
-#ifndef LOGIN_GUARD__H 
-#define LOGIN_GUARD__H
+#ifndef SIGN_GUARD__H 
+#define SIGN_GUARD__H
 
 #include <stdio.h>
 

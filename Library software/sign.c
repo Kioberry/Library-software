@@ -6,8 +6,9 @@
 #include "user.h"
 #include "library.h"
 #include "global.h"
+#include "book_management.h"
 
-
+//The login interface shown on the screen
 void signMenu() {
 	printf("\tWelcome to the Library Management System\n");
 	printf("\n");
@@ -119,19 +120,31 @@ void registration(FILE* fp, char ufname[50]) {
 int searchUser(FILE* fp, char ufname[50], char fusername[50], char fpassword[50]) {
 	int numBorrowed;
 	char name[20], username[20], password[20];
+	Book* borrowed;
 	if ((fp = fopen(ufname, 'r')) == NULL) {
-		printf("No user exists yet! Please create a new account.");
-		getch();
-		signCLI();
+		//printf("No user exists yet! Please create a new account.");
+		fp = fopen(ufname, 'w');
+		fprintf(fp, "%d%s%s%s", 0, "librarian", "librarian", "0000");
+		//getch();
+		fclose(fp);
+		//signCLI();
 	}
-
+	fopen(ufname, 'r');
 	for (; !feof(fp);)
 	{
-		fscanf(fp, "%d%s%s%s", &numBorrowed, &name, &username, &password);
+		fscanf(fp, "%d%s%s%s%s", &numBorrowed, name, username, password, borrowed);
 		if (strcmp(fusername, username))
 		{
-			if (strcmp(fpassword, password) == 0)
+			if (strcmp(fpassword, password) == 0) {
+				theUser = (User*)malloc(sizeof(User));
+				theUser->numBorrowed = numBorrowed;
+				strcpy(theUser->name, name);
+				strcpy(theUser->username, username);
+				strcpy(theUser->password, password);
+				//¿ÉÒÔÂð£¿
+				theUser->borrowed = borrowed;
 				return 1;
+			}	
 			else
 			{
 				return -1;
@@ -156,7 +169,7 @@ void login() {
 		}
 	} while (press == 27);
 
-	printf("Please enter your password: ");
+	printf("Please enter your password(The initial password of librarian is 0000): ");
 	scanf("%s", &password);
 	int ret = searchUser(ufile, ufname, t_username, password);
 	if (ret == 1) {
@@ -229,6 +242,7 @@ void signSearch() {
 
 
 void signCLI() {
+	User* theUser;
 	signMenu();
 	char choice = 0;
 	scanf("%c", choice);
@@ -241,10 +255,15 @@ void signCLI() {
 				login();
 				break;
 			case'3':
+				printf("\nLoading search menu...\n");
+				system("pause");
 				signSearch();
 				break;
 			case'4':
-				system("cls");
+				display_books(bhead);
+				break;
+			case'5':
+				printf("Thank you for using the library!\nGoodbye!");
 				break;
 			default:
 				printf("\nSorry, the option you entered was invalid, please try again.\n");

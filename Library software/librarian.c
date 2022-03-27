@@ -12,6 +12,7 @@ void librarianMenu() {
 	printf("---------------------------------------------\n");
 	printf("\t\t1) Add a book\n");
 	printf("\t\t2) Remove a book\n");
+	//可以增加一个加库存的函数
 	printf("\t\t3) Search for books\n");
 	printf("\t\t4) Display all books\n");
 	printf("\t\t5) Log out\n");
@@ -19,6 +20,7 @@ void librarianMenu() {
 	printf("\tPlease choose an option, press Enter to confirm\n");
 	printf("---------------------------------------------\n");
 	printf("\n");
+	printf("Option:");
 }
 
 
@@ -40,7 +42,7 @@ int add_book(Book book) {
 	t3 = scanf("%d", year);
 	printf("Enter the number of the copies of the book that you wish to add: ");
 	t4 = scanf("%d", copies);
-	if (t1 == 0 || t2 == 0 || t3 == 0 || t4 == 0) {
+	if (t1 == 0 || t2 == 0 || t3 == 0 || t4 == 0 || year < 1000) {
 		printf("Sorry, you attempt to add an invalid book, please try again.");
 		userCLI();
 	}
@@ -59,7 +61,7 @@ int add_book(Book book) {
 		book.copies = copies;
 		newNode = &book;
 		p = bhead;
-		//transverse to get the last node of the linled list
+		//transverse to get the last node of the linked list
 		while (p1) {
 			p->next = p1;
 			p = p1;
@@ -85,6 +87,7 @@ int remove_book(Book book) {
 	char temp1[100] = '\0';
 	int t1 = 0;
 	Book* pFront, *p;
+	p = &book;
 	load_books(bfile);
 	printf("Enter the title of the book you wish to remove: ");
 	t1 = scanf("%s", temp1);
@@ -94,9 +97,13 @@ int remove_book(Book book) {
 		pFront = p;
 		p = p->next;
 		if (p == NULL) {
-			printf("\nNo book was found to delete, please try again");
+			printf("\nNo book was found to remove, please try again");
 			librarianCLI();
 		}
+	}
+	if (p->copies < p->originc) {
+		printf("Some users is borrowing copies of this book, you are not allowed to remove it.\n");
+		librarianCLI();
 	}
 	pFront->next = p->next;
 	--(booklist->length);
@@ -171,6 +178,35 @@ void librarianSearch() {
 	}
 }
 
-int main(void) {
-	 
+void librarianCLI() {
+	char choice = 0;
+	Book newBook, reBook;
+	librarianMenu();
+	scanf("%c", choice);
+	switch (choice) {
+		case'1':
+			add_book(newBook);
+			break;
+		case'2':
+			remove_book(reBook);
+			break;
+		case'3':
+			printf("\nLoading search menu...\n");
+			system("pause");
+			librarianSearch();
+			break;
+		case'4':
+			display_books(bhead);
+			break;
+		case'5':
+			printf("\nLogging out...\n");
+			system("pause");
+			signCLI();
+			break;
+		default:
+			printf("\nSorry, the option you entered was invalid, please try again.\n");
+			system("pause");
+			librarianCLI();
+		
+	}
 }
