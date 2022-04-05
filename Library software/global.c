@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-char ufname[50];
-char bfname[50];
+char ufname[40];
+char bfname[40];
 
 char tempt[100];
 char tempa[100];

@@ -7,7 +7,7 @@ typedef struct _User {
 	int numBorrowed;
 	char name[50], username[50], password[50];
 	Book* borrowed;
-	struct _USer* next;
+	struct _User* next;
 }User;
 
 extern User* uhead;

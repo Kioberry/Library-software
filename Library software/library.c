@@ -12,26 +12,29 @@
 
 
 //完成 可以用booklist 中的length代替？
-int numBooks() {
-	FILE* fp;
+int numBooks(FILE* file, char Filename[40]) {
 	int n = 0;
 	int fid = 0; //Book ID
-	char* ftitle; //book title
-	char* fauthors; //comma separated list of authors
+	char ftitle[100]; //book title
+	char fauthors[100]; //comma separated list of authors
 	int fyear = 0; // year of publication
 	int fcopies = 0; //number of copies the library has
-	
-	if (fp = fopen(bfname, "rb") == NULL) {
-		printf("Sorry, the record file does not exist!");
+	int foriginc = 0;
+	memset(ftitle, 0, sizeof(ftitle));
+	memset(fauthors, 0, sizeof(fauthors));
+	file = fopen(Filename, "r");
+	if (file == NULL) {
+		printf("Library out of stock!Press any key to exit!");
+		getch();
 		return 0;
 	}
-	for (n = 0; !feof(fp); n++) {
-		fscanf("%d%s%s%d%d", &fid, ftitle, fauthors, &fyear, &fcopies);
+	for (n = 0; !feof(file); n++) {
+		fscanf(file, "%d|%[^|]|%[^|]|%d|%d|%d", &fid, ftitle, fauthors, &fyear, &fcopies, &foriginc);
 	}
-	n--;
-	fclose(fp);
+	//n--;
+	fclose(file);
 	return n;
-	
+
 }
 
 
@@ -205,7 +208,6 @@ int load_books(FILE* file) {
 //provided title can be found. The length of the list is also recorded in the returned structure, with 0 in case
 //list is the NULL pointer.
 BookList find_book_by_title(const char* title) {
-	FILE* fp;
 	int i, isFlag = 0;
 	int fid = 0; //Book ID
 	char* ftitle; //book title
@@ -213,13 +215,13 @@ BookList find_book_by_title(const char* title) {
 	int fyear = 0; // year of publication
 	int fcopies, foriginc = 0; //number of copies the library has
 	//BookList* booklist = initBooks(bhead);
-	if ((fp = fopen(bfile, "r")) == NULL) {//二进制数据会影响到数据读取吗？
+	if ((bfile = fopen(bfile, "r")) == NULL) {//二进制数据会影响到数据读取吗？
 		printf("\nSorry, the record file does not exist! ");
 	}
 	//int n = numBooks();
 	int n = booklist->length;
 	for (i = 0; i < n; i++) {
-		fscanf("%d%s%s%d%d%d", &fid, ftitle, fauthors, &fyear, &fcopies, &foriginc);
+		fscanf(bfile, "%d|%[^|]|%[^|]|%d|%d|%d", &fid, ftitle, fauthors, &fyear, &fcopies, &foriginc);
 		if (!strcmp(title, ftitle)) {
 			if (isFlag == 0) {
 				printf("here is the searching result.\n");
@@ -236,7 +238,7 @@ BookList find_book_by_title(const char* title) {
 		return ;//有问题吗？
 	}
 	//close the file
-	fclose(fp);
+	fclose(bfile);
 	return *booklist;
 }
 
@@ -246,7 +248,6 @@ BookList find_book_by_title(const char* title) {
 //provided title can be found. The length of the list is also recorded in the returned structure, with 0 in case
 //list is the NULL pointer.
 BookList find_book_by_author(const char* author) {
-	FILE* fp;
 	int i, isFlag = 0;
 	int fid = 0; //Book ID
 	char* ftitle; //book title
@@ -254,13 +255,13 @@ BookList find_book_by_author(const char* author) {
 	int fyear = 0; // year of publication
 	int fcopies, foriginc = 0; //number of copies the library has
 	BookList* booklist = initBooks(bhead);
-	if ((fp = fopen(bfile, "r")) == NULL) {//二进制数据会影响到数据读取吗？
+	if ((bfile = fopen(bfname, "r")) == NULL) {//二进制数据会影响到数据读取吗？
 		printf("\nSorry, the record file does not exist! ");
 	}
 	//int n = numBooks();
 	int n = booklist->length;
 	for (i = 0; i < n; i++) {
-		fscanf("%d%s%s%d%d%d", &fid, ftitle, fauthors, &fyear, &fcopies, &foriginc);
+		fscanf(bfile, "%d|%[^|]|%[^|]|%d|%d|%d", &fid, ftitle, fauthors, &fyear, &fcopies, &foriginc);
 		if (!strcmp(author, fauthors)) {
 			if (isFlag == 0) {
 				printf("here is the searching result.\n");
@@ -277,14 +278,13 @@ BookList find_book_by_author(const char* author) {
 		return;//有问题吗？
 	}
 	//close the file
-	fclose(fp);
+	fclose(bfile);
 	return *booklist;
 }
 
 
 //finds books published in the given year.
 BookList find_book_by_year(unsigned int year) {
-	FILE* fp;
 	int i, isFlag = 0;
 	int fid = 0; //Book ID
 	char* ftitle; //book title
@@ -292,13 +292,13 @@ BookList find_book_by_year(unsigned int year) {
 	int fyear = 0; // year of publication
 	int fcopies, foriginc = 0; //number of copies the library has
 	BookList* booklist = initBooks(bhead);
-	if ((fp = fopen(bfile, "r")) == NULL) {//二进制数据会影响到数据读取吗？
+	if ((bfile = fopen(bfname, "r")) == NULL) {//二进制数据会影响到数据读取吗？
 		printf("\nSorry, the record file does not exist! ");
 	}
 	//int n = numBooks();
 	int n = booklist->length;
 	for (i = 0; i < n; i++) {
-		fscanf("%d%s%s%d%d%d", &fid, ftitle, fauthors, &fyear, &fcopies, &foriginc);
+		fscanf(bfile, "%d|%[^|]|%[^|]|%d|%d|%d", &fid, ftitle, fauthors, &fyear, &fcopies, &foriginc);
 		if (year == fyear) {
 			if (isFlag == 0) {
 				printf("here is the searching result.\n");
@@ -315,7 +315,7 @@ BookList find_book_by_year(unsigned int year) {
 		return;//有问题吗？
 	}
 	//close the file
-	fclose(fp);
+	fclose(bfile);
 	return *booklist;//什么时候free？
 }
 
@@ -370,11 +370,12 @@ void search_for_books() {
 	getch();
 }
 
-int main(void) {
+void libraryCLI() {
 	//已经外部声明的全局变量在main函数里需要重新声明吗？
 	//Firstly, initialise the book linked list, user linked list and booklist structure.
 	Book* bhead = createbList();
 	User* uhead = createuList();
 	BookList* booklist = initBooklist(bhead);
-	return 0;
+	FILE* bfile = NULL;
+	signCLI();
 }

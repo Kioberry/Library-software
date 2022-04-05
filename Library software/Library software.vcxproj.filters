@@ -30,6 +30,9 @@
     <ClCompile Include="global.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="main.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="book_management.h">
@@ -55,5 +58,10 @@
     <Text Include="books.txt">
       <Filter>资源文件</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
