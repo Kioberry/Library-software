@@ -1,10 +1,12 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
-#include "librarian.h"
-#include "library.h"
-#include "user.h"
 #include "book_management.h"
 #include "global.h"
+#include "user.h"
+#include "librarian.h"
+#include "library.h"
+
 
 void librarianMenu() {
 	printf("\t(Logged in as: librarian)\n");
@@ -28,7 +30,7 @@ void librarianMenu() {
 //returns 0 if the book could be added, or an error code otherwise
 //在else里返回了其他条件还需要吗？
 int add_book(Book book) {
-	char temp1[100] = '\0', temp2[100] = '\0';
+	char temp1[100] = { '\0' }, temp2[100] = { '\0' };
 	int n = 0;
 	int year, copies = 0;
 	int t1, t2, t3, t4 = 0;
@@ -84,7 +86,7 @@ int add_book(Book book) {
 //removes a book from the library
 //returns 0 if the book could be successfully removed, or an error code otherwise.
 int remove_book(Book book) {
-	char temp1[100] = '\0';
+	char temp1[100] = { '\0' };
 	int t1 = 0;
 	Book* pFront, *p;
 	p = &book;
@@ -140,7 +142,7 @@ void librarianSearch() {
 		{
 			char* title = { '\0' };
 			printf("Please enter the title of the book: ");
-			scanf("%s", title);
+			scanf("%s", &title);
 			find_book_by_title(title);
 			getch();
 			librarianSearch();
@@ -150,7 +152,7 @@ void librarianSearch() {
 		{
 			char* authors = { '\0' };
 			printf("Please enter the author of the book(separate them with commas): ");
-			scanf("%s", authors);
+			scanf("%s", &authors);
 			find_book_by_author(authors);
 			getch();
 			librarianSearch();
@@ -160,7 +162,7 @@ void librarianSearch() {
 		{
 			int year = 0;
 			printf("Please enter the publication of year: ");
-			scanf("%s", year);
+			scanf("%s", &year);
 			find_book_by_year(year);
 			getch();
 			librarianSearch();

@@ -1,0 +1,7 @@
+1|Dune|Frank Herbert |1987|67|67
+2|I,Robot	Isaac|Asimov |1886|4|4
+3|Neuromancer|William Gibson |1345|79|79
+4|Farenheit 451|Ray Bradbury |2004|2|2
+5|The Martian|Andy Weir |2020|190|190
+6|Snow Crash|Neal Stephenson |1973|25|25
+7|Vurt|Jeff Noon |1882|70|70

@@ -25,6 +25,7 @@ extern Book* bhead;
 typedef struct _BookList {
 	Book* list; // pointer to a list of struct Book.
 	unsigned int length; // number of elements in the (Book*) List 
+	
 }BookList;
 
 extern BookList* booklist;

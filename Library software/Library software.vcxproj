@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="book_management.c" />
     <ClCompile Include="global.c" />
     <ClCompile Include="librarian.c" />
     <ClCompile Include="library.c" />

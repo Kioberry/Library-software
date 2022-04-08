@@ -1,12 +1,15 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-#include "sign.h"
-#include "user.h"
-#include "library.h"
-#include "global.h"
 #include "book_management.h"
+#include "global.h"
+#include "user.h"
+#include "sign.h"
+#include "library.h"
+
 
 //The login interface shown on the screen
 void signMenu() {
@@ -231,7 +234,7 @@ void login() {
 
 	printf("Please enter your password(The initial password of librarian is 0000): ");
 	scanf("%s", &password);
-	int ret = searchUser(ufile, ufname, t_username, password);
+	ret = searchUser(ufile, ufname, t_username, password);
 	if (ret == 1) {
 		userCLI();
 	}
@@ -324,8 +327,9 @@ void signCLI() {
 				break;
 			case'5':
 				printf("--------------------------------------\n");
-				printf("Initial librarian account: librarian\n");
+				printf("1.Initial librarian account: librarian\n");
 				printf("Initial password: 0000");
+				printf("2.A user can borrow no more than 4 books");
 				printf("--------------------------------------\n");
 				break;
 			case'6':
