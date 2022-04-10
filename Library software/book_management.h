@@ -20,15 +20,15 @@ typedef struct _Book {
 	struct _Book* next; //pointer to the next book element
 }Book;
 
-//extern Book* bhead;
-Book* bhead;
+extern Book* bhead;
+
 typedef struct _BookList {
 	Book* list; // pointer to a list of struct Book.
 	unsigned int length; // number of elements in the (Book*) List 
+	
 }BookList;
 
-//extern BookList* booklist;
-BookList* booklist;
+extern BookList* booklist;
 FILE* bfile;
 //saves the database of books in the specified file
 //returns 0 if books were stored correctly, or an error code otherwise
