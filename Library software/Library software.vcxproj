@@ -87,8 +87,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,19 +142,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="book_management.c" />
-    <ClCompile Include="global.c" />
-    <ClCompile Include="librarian.c" />
-    <ClCompile Include="library.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="sign.c" />
     <ClCompile Include="user.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="book_management.h" />
-    <ClInclude Include="global.h" />
-    <ClInclude Include="librarian.h" />
-    <ClInclude Include="library.h" />
-    <ClInclude Include="sign.h" />
     <ClInclude Include="user.h" />
   </ItemGroup>
   <ItemGroup>

@@ -194,7 +194,6 @@ BookList find_book_by_year(unsigned int year) {
 	while (p) {
 		if (p->year == year) {
 			//copy the book into the newly created booklist
-			list0.length++;
 			Book* node = (Book*)calloc(1, sizeof(Book));
 			node->title = (char*)calloc(1, 50 * sizeof(char));
 			node->authors = (char*)calloc(1, 50 * sizeof(char));
@@ -204,6 +203,7 @@ BookList find_book_by_year(unsigned int year) {
 			strcpy(node->title, p->title);
 			node->year = p->year;
 			node->copies = p->copies;
+			node->originc = p->originc;
 			if (list0.length == 0) {
 				list0.list->next = node;
 				node->next = NULL;
@@ -218,6 +218,7 @@ BookList find_book_by_year(unsigned int year) {
 					q = q->next;
 				}
 			}
+			list0.length++;
 		}
 		p = p->next;
 	}
