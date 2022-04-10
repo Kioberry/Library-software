@@ -141,19 +141,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="book_management.c" />
-    <ClCompile Include="global.c" />
-    <ClCompile Include="librarian.c" />
-    <ClCompile Include="library.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="sign.c" />
     <ClCompile Include="user.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="book_management.h" />
-    <ClInclude Include="global.h" />
-    <ClInclude Include="librarian.h" />
-    <ClInclude Include="library.h" />
-    <ClInclude Include="sign.h" />
     <ClInclude Include="user.h" />
   </ItemGroup>
   <ItemGroup>
