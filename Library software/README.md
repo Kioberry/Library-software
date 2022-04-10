@@ -1,9 +1,7 @@
-Library Software
-================
-This project is a simple software to realise the basic function of a library system.<br>
-It contains login system, librarian system,and user system. In the Login system, users can choose<br>
-to register or log in the library system. They can also choose to view all books or quit the librry system.<br>
+# COMP1921 Programming Project Coursework1
+Please note that all inputs in this program are case sensitive, and that both the username and
+the password for the librarian account is librarian.
 
 
-URL:
+URL:https://github.com/Kioberry/Library-software/tree/master/Library%20software
 
